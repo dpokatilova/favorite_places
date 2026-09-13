@@ -15,3 +15,10 @@ def home_view(request):
         "featured_place": featured_place
     }
     return render(request, "places/home.html", context)
+
+
+def places_list_view(request):
+    context = {
+        "places": FAVORITE_PLACES
+    }
+    return render(request, "places/places_list.html", context)
