@@ -22,3 +22,16 @@ def places_list_view(request):
         "places": FAVORITE_PLACES
     }
     return render(request, "places/places_list.html", context)
+
+
+def place_detail_view(request, place_id):
+    found_place = None
+    for place in FAVORITE_PLACES:
+        if place["id"] == place_id:
+            found_place = place
+            break
+
+    context = {
+        "place": found_place
+    }
+    return render(request, "places/place_detail.html", context)
