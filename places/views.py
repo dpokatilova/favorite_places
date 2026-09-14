@@ -50,7 +50,7 @@ def add_place_view(request):
                 "type": form.cleaned_data['place_type'],
                 "location": form.cleaned_data['location'],
                 "rating": form.cleaned_data['rating'],
-                "description": form.cleaned_data['description'],
+                "long_description": form.cleaned_data['description'],
                 "date_added": "2026-09-14",
             }
             FAVORITE_PLACES.append(new_place)

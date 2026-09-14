@@ -22,6 +22,9 @@
                         <span class="place-type">Тип: {{ place.type }}</span>
                         <br>
                         <span class="place-rating">Рейтинг: {{ place.rating }}/5</span>
+                        <p class="place-description">
+                            {{ place.short_description|default:place.long_description|truncatewords:10 }}
+                        </p>
                     </div>
                 </div>
             {% endfor %}
