@@ -1,0 +1,32 @@
+{% extends "places/base.html" %}
+{% load static %}
+
+{% block title %}Усі улюблені місця{% endblock %}
+
+{% block content %}
+    <h1>Список улюблених місць Києва</h1>
+
+    {% if places %}
+        <div class="places-container">
+            {% for place in places %}
+                <div class="place-card">
+                    
+                    <img src="{% static 'places/location.jpg' %}" alt="Фото" width="140" height="100" class="place-img">
+                    
+                    
+                    <div>
+                        <strong>
+                            <a href="{% url 'place_detail' place.id %}" class="place-title">{{ place.title }}</a>
+                        </strong>
+                        <br>
+                        <span class="place-type">Тип: {{ place.type }}</span>
+                        <br>
+                        <span class="place-rating">Рейтинг: {{ place.rating }}/5</span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Список місць порожній.</p>
+    {% endif %}
+{% endblock %}
