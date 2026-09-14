@@ -1,0 +1,24 @@
+{% extends "places/base.html" %}
+{% load static %}
+
+{% block title %}{{ place.title|default:"Місце не знайдено" }}{% endblock %}
+
+{% block content %}
+    {% if place %}
+        <h1>{{ place.title }}</h1>
+        
+        
+        <img src="{% static 'places/location.jpg' %}" alt="Фото локації" width="300">
+        
+        <p><strong>Тип:</strong> {{ place.type }}</p>
+        <p><strong>Адреса:</strong> {{ place.location }}</p>
+        <p><strong>Рейтинг:</strong> {{ place.rating }}/5</p>
+        <p><strong>Дата додавання:</strong> {{ place.date_added }}</p>
+        
+        <h3>Опис</h3>
+        <p>{{ place.long_description }}</p>
+    {% else %}
+        <h1>404 — Місце не знайдено</h1>
+        <p>На жаль, місця з таким ID не існує.</p>
+    {% endif %}
+{% endblock %}
