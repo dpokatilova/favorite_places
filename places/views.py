@@ -4,7 +4,7 @@ from .data import FAVORITE_PLACES
 
 def home_view(request):
     featured_place = None
-    if FAVORITE_PLACES:
+    if request.GET.get("roll") and FAVORITE_PLACES:
         weights = []
         for place in FAVORITE_PLACES:
             rating = place.get("rating", 1)
