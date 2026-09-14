@@ -11,7 +11,12 @@
         <img src="{% static 'places/location.jpg' %}" alt="Фото локації" width="300">
         
         <p><strong>Тип:</strong> {{ place.type }}</p>
-        <p><strong>Адреса:</strong> {{ place.location }}</p>
+        <p><strong>Адреса:</strong> {% if place.location %}
+                                        {{place.location}}
+                                    {% else %}
+                                        Secret place👀
+                                    {% endif %}
+        </p>
         <p><strong>Рейтинг:</strong> {{ place.rating }}/5</p>
         <p><strong>Дата додавання:</strong> {{ place.date_added }}</p>
         
