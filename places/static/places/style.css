@@ -1,0 +1,59 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    color: #333;
+    line-height: 1.6;
+}
+
+header nav a {
+    margin-right: 10px;
+    text-decoration: none;
+    color: #0066cc;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+/* Стилі для списку місць */
+.places-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.place-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+}
+
+.place-img {
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.place-title {
+    font-size: 20px;
+    text-decoration: none;
+    color: #0066cc;
+}
+
+.place-title:hover {
+    text-decoration: underline;
+}
+
+.place-type {
+    color: #555;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.place-rating {
+    color: #777;
+    display: inline-block;
+    margin-top: 3px;
+}
