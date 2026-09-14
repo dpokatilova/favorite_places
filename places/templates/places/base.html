@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Улюблені місця{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'places/style.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'home' %}">Головна</a> |
+            <a href="{% url 'places_list' %}">Усі місця</a>
+        </nav>
+    </header>
+    <hr>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <hr>
+    <footer>
+        <p>
+            Created by Daria Pokatilova
+            14.09.2026
+        </p>
+    </footer>
+
+</body>
+</html>
