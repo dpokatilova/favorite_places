@@ -1,51 +1,66 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import random
 from .data import FAVORITE_PLACES
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 from .forms import NewPlaceForm
 
 def home_view(request):
+    if "places" not in request.session:
+        request.session["places"] = list(FAVORITE_PLACES)
+
+    current_places = request.session["places"]
+
     featured_place = None
-    if request.GET.get("roll") and FAVORITE_PLACES:
-        weights = []
-        for place in FAVORITE_PLACES:
-            rating = place.get("rating", 1)
-            weights.append(rating)
+    if request.GET.get("roll") == "true" and current_places:
+        featured_place = random.choice(current_places)
 
-        featured_place = random.choices(FAVORITE_PLACES, weights=weights, k=1)[0]
-    context = {
-        "featured_place": featured_place
-    }
-    return render(request, "places/home.html", context)
-
+    return render(request, "places/home.html", {"featured_place": featured_place})
 
 def places_list_view(request):
+    if "places" not in request.session:
+        request.session["places"] = list(FAVORITE_PLACES)
+
     context = {
-        "places": FAVORITE_PLACES
+        "places": request.session["places"]
     }
     return render(request, "places/places_list.html", context)
 
 
 def place_detail_view(request, place_id):
-    found_place = None
-    for place in FAVORITE_PLACES:
-        if place["id"] == place_id:
-            found_place = place
+    if "places" not in request.session:
+        request.session["places"] = list(FAVORITE_PLACES)
+
+    current_places = request.session["places"]
+
+    place = None
+    for p in current_places:
+        if p['id'] == place_id:
+            place = p
             break
 
-    context = {
-        "place": found_place
-    }
-    return render(request, "places/place_detail.html", context)
+    if place is None:
+        from django.http import Http404
+        raise Http404("Місце не знайдено")
+
+    return render(request, "places/place_detail.html", {"place": place})
 
 
 def add_place_view(request):
     if request.method == 'POST':
         form = NewPlaceForm(request.POST)
         if form.is_valid():
+            if "places" not in request.session:
+                request.session["places"] = list(FAVORITE_PLACES)
+
+            current_places = request.session["places"]
+
+            max_id = 0
+            for p in current_places:
+                if p["id"] > max_id:
+                    max_id = p["id"]
+            new_id = max_id + 1
+
             new_place = {
-                "id": len(FAVORITE_PLACES) + 1,
+                "id": new_id,
                 "title": form.cleaned_data['title'],
                 "type": form.cleaned_data['place_type'],
                 "location": form.cleaned_data['location'],
@@ -53,8 +68,11 @@ def add_place_view(request):
                 "long_description": form.cleaned_data['description'],
                 "date_added": "2026-09-14",
             }
-            FAVORITE_PLACES.append(new_place)
-            return HttpResponseRedirect(reverse('places_list'))
+            current_places.append(new_place)
+            request.session["places"] = current_places
+            request.session.modified = True
+
+            return redirect("places_list")
     else:
         form = NewPlaceForm()
 
