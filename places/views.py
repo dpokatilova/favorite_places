@@ -3,11 +3,14 @@ import random
 from .data import FAVORITE_PLACES
 from .forms import NewPlaceForm
 
-def home_view(request):
+def get_user_places(request):
     if "places" not in request.session:
         request.session["places"] = list(FAVORITE_PLACES)
+    return request.session["places"]
 
-    current_places = request.session["places"]
+
+def home_view(request):
+    current_places = get_user_places(request)
 
     featured_place = None
     if request.GET.get("roll") == "true" and current_places:
@@ -26,20 +29,14 @@ def home_view(request):
     return render(request, "places/home.html", {"featured_place": featured_place})
 
 def places_list_view(request):
-    if "places" not in request.session:
-        request.session["places"] = list(FAVORITE_PLACES)
-
     context = {
-        "places": request.session["places"]
+        "places": get_user_places(request)
     }
     return render(request, "places/places_list.html", context)
 
 
 def place_detail_view(request, place_id):
-    if "places" not in request.session:
-        request.session["places"] = list(FAVORITE_PLACES)
-
-    current_places = request.session["places"]
+    current_places = get_user_places(request)
 
     place = None
     for p in current_places:
@@ -58,10 +55,7 @@ def add_place_view(request):
     if request.method == 'POST':
         form = NewPlaceForm(request.POST)
         if form.is_valid():
-            if "places" not in request.session:
-                request.session["places"] = list(FAVORITE_PLACES)
-
-            current_places = request.session["places"]
+            current_places = get_user_places(request)
 
             max_id = 0
             for p in current_places:
