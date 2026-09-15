@@ -127,6 +127,18 @@ footer {
     padding-top: 20px;
 }
 
+.star-rating {
+    color: #f5b301;
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+
+.star-rating.rating-5::before { content: '★★★★★'; }
+.star-rating.rating-4::before { content: '★★★★☆'; }
+.star-rating.rating-3::before { content: '★★★☆☆'; }
+.star-rating.rating-2::before { content: '★★☆☆☆'; }
+.star-rating.rating-1::before { content: '★☆☆☆☆'; }
+
 .place-card {
     display: flex;
     align-items: flex-start;

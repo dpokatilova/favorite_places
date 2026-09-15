@@ -12,7 +12,7 @@
         <img src="{% static 'places/location.jpg' %}" alt="Фото локації" width="200">
         <p><strong>Тип:</strong> {{ featured_place.type }}</p>
         <p><strong>Опис:</strong> {{ featured_place.short_description|default:featured_place.long_description|truncatewords:10 }}</p>
-        <p><strong>Рейтинг:</strong> {{ featured_place.rating }}/5</p>
+        <p><strong>Рейтинг:</strong> <span class="star-rating rating-{{ featured_place.rating }}"></span></p>
         <p><a href="{% url 'place_detail' featured_place.id %}">Переглянути деталі</a></p>
     {% else %}
         <p>Це сайт для того, щоб дізнатись про нові цікаві місця або додати свої. Натисни кнопку нижче, щоб система обрала для тебе локацію на сьогодні!</p>
