@@ -11,7 +11,17 @@ def home_view(request):
 
     featured_place = None
     if request.GET.get("roll") == "true" and current_places:
-        featured_place = random.choice(current_places)
+        total_rating = 0
+        for p in current_places:
+            total_rating += int(p.get("rating", 1))
+        random_point = random.randint(1, total_rating)
+
+        current_sum = 0
+        for p in current_places:
+            current_sum += int(p.get("rating", 1))
+            if current_sum >= random_point:
+                featured_place = p
+                break
 
     return render(request, "places/home.html", {"featured_place": featured_place})
 
